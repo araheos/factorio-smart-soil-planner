@@ -1,0 +1,20 @@
+{
+  "name": "smart-soil-planner",
+  "version": "1.0.0",
+  "title": "Smart Soil Planner",
+  "author": "LastPaladin",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.0",
+    "space-age >= 2.1.0"
+  ],
+  "description": "Adds a soil planner for gleba. Can also remove excess soil from existing crop plots.",
+  "package": {
+    "ignore": [
+      ".git/**",
+      ".vscode/**",
+      "deploy.py",
+      "TODO.txt"
+    ]
+  }
+}
