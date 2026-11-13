@@ -39,3 +39,13 @@ data:extend({
         order = "c"
     }
 })
+
+data:extend({
+    {
+        type = "bool-setting",
+        name = "smart-soil-chat-feedback",
+        setting_type = "runtime-per-user",
+        default_value = true,
+        order = "d"
+    }
+})

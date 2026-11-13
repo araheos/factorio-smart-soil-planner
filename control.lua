@@ -2,11 +2,13 @@
 -- Import custom modules
 local SoilCleanup = require("scripts.soil-cleanup-improved")
 local SoilPlanner = require("scripts.soil-planner")
+local ModSettings = require("scripts.mod-settings")
 
 local TOOL_NAME = "smart-soil-tool"
 
-
 local TOWER_NAME = "agricultural-tower"
+
+local FRUIT_PER_MIN = 10
 
 
 local function cleanupEvent(event)
@@ -15,6 +17,7 @@ local function cleanupEvent(event)
         return
     end
 
+    local config = ModSettings.get(player)
     local tiles = event.tiles
 
     if #tiles == 0 then
@@ -39,6 +42,10 @@ local function cleanupEvent(event)
             time_to_live = 240
         })
     end
+
+    if config.chat_feedback then
+        player.print("Detected " .. #result.wasted_tiles .. " wasted tiles.")
+    end
 end
 
 
@@ -48,17 +55,30 @@ local function plannerEvent(event)
         return
     end
 
+    local config = ModSettings.get(player)
+
     local towers = event.surface.find_entities_filtered({
         area = event.area,
         name = TOWER_NAME
     })
-    -- player.print("Found " .. #towers .. " agricultural tower(s).")
 
     if #towers == 0 then
         return
     end
 
-    SoilPlanner.process(towers, player)
+    local result = SoilPlanner.process(towers, player)
+    if config.chat_feedback then
+        local fruit_prod = result.valid_plots * FRUIT_PER_MIN
+        fruit_prod = string.format("%.2f", fruit_prod)
+        fruit_prod = fruit_prod:gsub("%.?0+$", "")
+
+        local fruit_prod_sec = fruit_prod/60
+        fruit_prod_sec = string.format("%.2f", fruit_prod_sec)
+        fruit_prod_sec = fruit_prod_sec:gsub("%.?0+$", "")
+
+        player.print("Placed " .. result.placed_tiles .. " new soil tiles across " .. result.valid_plots .. " valid plots.")
+        player.print("This agricultural area will produce up to " .. fruit_prod .. " fruits/min (" .. fruit_prod_sec .. " fruits/sec)")
+    end
 
 end
 

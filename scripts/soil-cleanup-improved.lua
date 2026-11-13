@@ -151,15 +151,6 @@ local function is_plot_valid(tiles, flag_ignore_buildings)
 end
 
 
-local function table_count(t)
-    local count = 0
-    for _ in pairs(t) do
-        count = count + 1
-    end
-    return count
-end
-
-
 function SoilCleanup.analyze(soil_tiles, player)
     local config = ModSettings.get(player)
 

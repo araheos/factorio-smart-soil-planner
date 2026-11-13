@@ -6,7 +6,8 @@ function ModSettings.get(player)
     return {
         ignore_buildings = s["smart-soil-ignore-buildings"].value,
         placeholder_tile = s["smart-soil-placeholder-tile"].value,
-        affect_tiles_outside_towers = s["smart-soil-affect-tiles-outside-towers"].value
+        affect_tiles_outside_towers = s["smart-soil-affect-tiles-outside-towers"].value,
+        chat_feedback = s["smart-soil-chat-feedback"].value
     }
 end
 

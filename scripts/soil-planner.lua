@@ -321,7 +321,11 @@ function SoilPlanner.process(towers, player)
             end
         end
     end
-
+    return {
+        valid_plots = result.valid_plots,
+        invalid_plots = result.invalid_plots,
+        placed_tiles = created
+    }
 end
 
 return SoilPlanner
