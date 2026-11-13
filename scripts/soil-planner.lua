@@ -281,7 +281,7 @@ function SoilPlanner.process(towers, player)
     local undo_index = 0
     local created = 0
 
-    for _, tile in pairs(result.viable_tiles) do
+    for key, tile in pairs(result.viable_tiles) do
         local tile_name = tile.name
         local soil_type = nil
 
@@ -309,14 +309,16 @@ function SoilPlanner.process(towers, player)
         end
     end
 
-    for _, tile in pairs(result.remaining_tiles) do
-        local ghost = place_filler_tile(
-            tile,
-            player,
-            undo_index
-        )
-        if ghost then
-            undo_index = 1
+    for key, tile in pairs(result.remaining_tiles) do
+        if not result.viable_tiles[key] then
+            local ghost = place_filler_tile(
+                tile,
+                player,
+                undo_index
+            )
+            if ghost then
+                undo_index = 1
+            end
         end
     end
 
